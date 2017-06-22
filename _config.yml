@@ -12,8 +12,8 @@ permalink:        /blog/:year/:month/:day/:title
 # Setup
 #title:            'Jekyll Metro'
 title:            'Kevin zhang'
-tagline:          'A Metro theme for Jekyll'
-description:      'A Sample blog using Jekyll Metro'
+tagline:          'this is a first'
+description:      'A Sample blog using kevin zhang'
 url:              'https://xiaoy110.github.io/'
 baseurl:          ''
 
@@ -40,16 +40,16 @@ author:         'Kevin zhang'
 #Social Media links (Use complete URL except for email)
 dribbble:
 email:
-facebook:       'https://www.facebook.com/olakara'
+facebook:       'https://www.facebook.com/profile.php?id=100010833971458'
 flickr:
-github:         'https://github.com/olakara'
-gplus:          'https://plus.google.com/100425464897246255887/'
+github:         'https://github.com/xiaoy110/'
+gplus:          'https://plus.google.com/111755744090455561792'
 instagram:
 pinterest:
-linkedin:       'https://ae.linkedin.com/in/olakara/'
+linkedin:       'https://ae.linkedin.com/in/xxx/'
 rss:
-stackoverflow:  'http://stackoverflow.com/users/185655/abdel-raoof'
-twitter:        'https://twitter.com/olakara'
+stackoverflow:  'https://stackoverflow.com/users/story/8198110'
+twitter:        'https://twitter.com/xxx'
 
 # Google Analytics
 gahandler: 'UA-52149651-1'
@@ -58,10 +58,10 @@ gahandler: 'UA-52149651-1'
 footersvg: 'true'
 
 # Disqus
-disqushandler: 'testingblogo'
+disqushandler: 'kevin-7'
 
 # txtpen
-txtpenhandler: 'testingblogo'
+txtpenhandler: 'kevin-7'
 
 # Blog Configurations
 paginate: 10 # Posts per page on the blog index

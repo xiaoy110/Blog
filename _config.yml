@@ -68,3 +68,5 @@ destination: ./_site
 
 # Custom vars
 version:          0.9x beta 2
+
+theme: jekyll-theme-cayman

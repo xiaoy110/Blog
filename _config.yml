@@ -10,7 +10,8 @@ gems: [jekyll-paginate]
 permalink:        /blog/:year/:month/:day/:title
 
 # Setup
-title:            'Jekyll Metro'
+#title:            'Jekyll Metro'
+title:            'Kevin zhang'
 tagline:          'A Metro theme for Jekyll'
 description:      'A Sample blog using Jekyll Metro'
 url:              'https://xiaoy110.github.io/'
@@ -33,7 +34,8 @@ navigation:
 
 
 # Author Details
-author:         'Abdel Raoof Olakara'
+#author:         'Abdel Raoof Olakara'
+author:         'Kevin zhang'
 
 #Social Media links (Use complete URL except for email)
 dribbble:

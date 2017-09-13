@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  just send email
+title:  connecting mongo
 date:   2017-09-10 23:28:58
 categories: Python
 tags: Python

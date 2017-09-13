@@ -1,3 +1,10 @@
+---
+layout: post
+title:  just send email
+date:   2017-09-10 23:28:58
+categories: Python
+tags: Python
+---
 
 # query the table of the mongo from cc_data_20170505(database)
 

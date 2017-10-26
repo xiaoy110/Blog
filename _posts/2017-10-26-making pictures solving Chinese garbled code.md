@@ -1,87 +1,125 @@
 ---
 layout: post
-title:  just send email
-date:   2017-09-10 23:28:58
+title:  Making pictures through data
+date:   2017-10-26 10:28:58
 categories: Python
 tags: Python
 ---
 
 
-# just send email
+# found top ten and the last ten
+#
 ~~~python
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-from email.header import Header
+import matplotlib.pylab as pylab
+import matplotlib.pyplot as plt
+from matplotlib.font_manager import FontManager
+from pymongo import MongoClient
+import pandas as pd
+import datetime
+from dateutil.relativedelta import relativedelta
+from pylab import mpl
+import subprocess
 
-sender = 'zabbix@zabbix.com'
-sen_pass = 'heihieheipassword'
-receivers = ['738326244@qq.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+params={
+    'axes.labelsize': '35',
+    # set figure size
+    'axes.grid': 'on' #显示网格
+}
+pylab.rcParams.update(params)
 
-# 创建一个带附件的实例
-def mail():
-    ret = True
-    try:
-        msg = MIMEMultipart()
-        # msg = MIMEText('填写邮件内容', 'plain', 'utf-8')
-        msg['From'] = Header("hh",'utf-8')#formataddr(["FromRunoob", sender])  # 括号里的对应发件人邮箱昵称、发件人邮箱账号
-        msg['To'] = Header('test','utf-8')#formataddr(["FK",receivers])  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
-        msg['Subject'] = "菜鸟教程发送邮件测试"  # 邮件的主题，也可以说是标题
+#solving Chinese garbled code
+def get_matplot_zh_font():
+    fm = FontManager()
+    mat_fonts = set(f.name for f in fm.ttflist)
 
-        att1 = MIMEText(open('output.xlsx', 'rb').read(), 'base64', 'utf-8')
-        att1["Content-Type"] = 'application/octet-stream'
-        # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
-        att1["Content-Disposition"] = 'attachment; filename="output.xlsx"'
-        msg.attach(att1)
+    output = subprocess.check_output('fc-list :lang=zh -f "%{family}\n"', shell=True)
+    zh_fonts = set(f.split(',', 1)[0] for f in output.split('\n'))
+    available = list(mat_fonts & zh_fonts)
 
-        server = smtplib.SMTP("smtp.mxhichina.com", 25)  # 发件人邮箱中的SMTP服务器，端口是25
-        server.login(sender, sen_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
-        server.sendmail(sender, [receivers, ], msg.as_string())  # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
-        server.quit()  # 关闭连接
-    except Exception,e :  # 如果 try 中的语句没有执行，则会执行下面的 ret=False
-        print e
-        ret = False
-    return ret
+    print '*' * 10, '可用的字体', '*' * 10
+    for f in available:
+        print f
+    return available
 
+def set_matplot_zh_font():
+    available = get_matplot_zh_font()
+    if len(available) > 0:
+        mpl.rcParams['font.sans-serif'] = [available[0]]    # 指定默认字体
+        mpl.rcParams['axes.unicode_minus'] = False
+def rresult(callno):
+    ty = []
+    alcon = []
+    for i in xrange(12):
+        n = i+2
+        year = datetime.date.today().year
+        if n < 13:
+            st = datetime.date(year=year, month=n, day=1) + relativedelta(months=-1)
+            et = datetime.date(year=year, month=n, day=1) + relativedelta()
+        elif n == 13:
+            st = datetime.date(year=year, month=12, day=1)
+            et = datetime.date(year=year, month=12, day=31)
+        client = MongoClient('mongodb://10.10.10.10:10') #craete a client
+        db = client.cc_data_20170505 # connecting to db
+        collection = db.N00000013385_c5_call_sheet # connecting a table
 
-ret = mail()
-if ret:
-    print("邮件发送成功")
-else:
-    print("邮件发送失败")
-~~~
+        start_t = str(st) + " 00:00:00"
+        if n < 13:
+            end_t = str(et) + " 00:00:00"
+        elif n ==13:
+            end_t = str(et) + " 23:59:59"
+        #有效的连接数
+        connect = collection.find({'OFFERING_TIME':{"$gte": start_t,"$lte": end_t},'CALL_NO': callno,'STATUS':'dealing','CONNECT_TYPE':'dialout'}).count()
+        #所有的连接数
+        alconnect = collection.find({'OFFERING_TIME':{"$gte": start_t,"$lte": end_t},'CALL_NO': callno}).count()
+        alcon.append(alconnect)
+        if connect:
+            taa= float(connect)/float(alconnect)*100
+            ty.append(float('%.2f'%taa)) # Retain two decimal places
 
-## send to multiple user
-~~~Python
-def mail():
-    ret = True
-    try:
-        msg = MIMEMultipart()
-        # msg = MIMEText('填写邮件内容', 'plain', 'utf-8')
-        msg['From'] = Header("呼叫中心账单",'utf-8')
-        # msg['To'] = Header('test','utf-8')#formataddr(["FK",receivers])  # 括号里的对应收件人邮箱昵称、收件人邮箱账号
-        msg['Subject'] = fname  # 邮件的主题，也可以说是标题
-        msg['To'] = ",".join(receivers)
-
-        att1 = MIMEText(open(fname, 'rb').read(), 'base64', 'utf-8')
-        att1["Content-Type"] = 'application/octet-stream'
-        # 这里的filename可以任意写，写什么名字，邮件中显示什么名字
-        att1["Content-Disposition"] = 'attachment; filename="{0}"'.format(fname)
-        msg.attach(att1)
-
-        server = smtplib.SMTP("smtp.mxhichina.com", 25)  # 发件人邮箱中的SMTP服务器，端口是25
-        server.login(sender, sen_pass)  # 括号中对应的是发件人邮箱账号、邮箱密码
-        server.sendmail(sender, receivers, msg.as_string())  # 括号中对应的是发件人邮箱账号、收件人邮箱账号、发送邮件
-        server.quit()  # 关闭连接
-    except Exception,e :  # 如果 try 中的语句没有执行，则会执行下面的 ret=False
-        print e
-        ret = False
-    return ret
+        else:
+            ty.append(0)
+    return ty,alcon
 
 
-ret = mail()
-if ret:
-    print("邮件发送成功")
-else:
-    print("邮件发送失败")
+# months
+tx = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+def ratetop10(top10):
+    for i in top10['号码']:
+        Num = str(0)+str(i)
+        rat,alco = rresult(Num)
+        #上面的图
+        plt.subplot(211)
+        plt.plot(tx, rat,'s-')  # use pylab to plot x and y
+        plt.title(u'接通率')
+        #下面的图
+        plt.subplot(212)
+        plt.plot(tx,alco,'s-', label=i)
+        plt.title(u'通话总量')
+    # 标签所在的位置
+    plt.legend(loc="upper left")
+    plt.show()
+def ratedown10(down10):
+    for i in down10['号码']:
+        Num = str(0)+str(i)
+        rat,alco = rresult(Num)
+        #上面的图
+        plt.subplot(211)
+        plt.plot(tx, rat,'s-')  # use pylab to plot x and y
+        plt.title(u'接通率')
+        #下面的图
+        plt.subplot(212)
+        plt.plot(tx,alco,'s-', label=i)
+        plt.title(u'通话总量')
+    # 标签所在的位置
+    plt.legend(loc="upper left")
+    plt.show()
+if __name__ == "__main__":
+    get_matplot_zh_font()
+    set_matplot_zh_font()
+    xls = pd.read_excel('工作簿1.xlsx', names=['号码', 'a', 'b'])
+    # 拉黑次数最多前10
+    top10 = xls.sort_values('a', ascending=False).head(10)
+    down10 = xls.sort_values('a').head(10)
+    ratetop10(top10)
+    ratetop10(down10)
 ~~~

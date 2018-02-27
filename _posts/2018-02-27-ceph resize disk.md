@@ -1,7 +1,7 @@
----
+﻿---
 layout: post
 title:  ceph resize disk
-date:   2018-02-37 15:20:58
+date:   2018-02-27 15:20:58
 categories: Ceph
 tags: Ceph
 ---

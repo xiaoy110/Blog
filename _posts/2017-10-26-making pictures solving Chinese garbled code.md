@@ -8,7 +8,7 @@ tags: Python
 
 
 # found top ten and the last ten
-#
+
 ~~~python
 import matplotlib.pylab as pylab
 import matplotlib.pyplot as plt

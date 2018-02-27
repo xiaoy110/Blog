@@ -25,11 +25,11 @@ theme: red
     <div class="row">
         <div class="col-md-11">
             <section>
-                <h3>Python</h3>
+                <h3>Ceph</h3>
                 <ul>
                     {% for post in site.posts %}
                         {% for otag in post.tags %}
-                            {% if otag == 'Python' %}
+                            {% if otag == 'Ceph' %}
                                 <li class="alink"><a href="{{ post.url }}" class="red-link">{{ post.title }}</a></li>
                             {% endif %}
                         {% endfor %}

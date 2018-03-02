@@ -7,8 +7,6 @@ tags: Linux
 ---
 
 
-# migrate redmine from 3.1.1 to 3.4.4
-
 first of all check the databases version,engine and character, make sure that are in same version engine and character.
 
 check engine
@@ -25,7 +23,7 @@ Db     characterset:	utf8
 Client characterset:	utf8
 Conn.  characterset:	utf8
 ~~~
-it looks like are utf8 character but actuly it not
+it looks like are utf8 character but actually it not
 ~~~
 show create table attachments
 ~~~
@@ -79,13 +77,13 @@ source /xxx/redmine_production.sql
 ~~~
 there will be have some error that you cannot import. I found there have users and projects of table do not import to database
 
-the old database of the redmine don't have fields of default_version_id and default_assigned_to_id, so when you import the table of projects you should specify the fields like:</br>
+the old database of the redmine don't have fields of default_version_id and default_assigned_to_id, so when you import the table of projects you should specify the fields like:
 ```
 mysqldump redmind_product peojects > projects.sql
 insert into table(fields1,fields2)value(xxx,xxx)
 source /xxx/projects.sql
 ```
-another one you should truncate </br>
+another one you should truncate
 ```
 mysqldump redmind_product users > users.sql
 turncate users
@@ -101,7 +99,7 @@ apt install libmagickwand-dev libmysqlclient-dev libpq-dev
 gem install rmagick mysql2 pg
 ~~~
 download plugins
-put it into direcoty of plugins run
+put it into direcoty of plugins and run instruction
 ~~~
 rake redmine:plugins:migrate  RAILS_ENV=production
 ~~~

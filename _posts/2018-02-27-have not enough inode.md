@@ -1,6 +1,6 @@
 ﻿---
 layout: post
-title:  inode不够了
+title:  have not enough inode
 date:   2018-02-27 15:15:58
 categories: Linux
 tags: Linux

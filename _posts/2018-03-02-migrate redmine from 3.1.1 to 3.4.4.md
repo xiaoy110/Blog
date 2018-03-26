@@ -6,7 +6,6 @@ categories: Linux
 tags: Linux
 ---
 
-
 first of all check the databases version,engine and character, make sure that are in same version engine and character.
 
 check engine
@@ -58,12 +57,12 @@ mysqldump　-t　redmine_production　-uroot　-p　>　redmine_production.sql�
 before you import to new databases if not utf8
 convert it to utf8
 ~~~
-convert all tables character to another
 SELECT CONCAT('ALTER TABLE `', TABLE_NAME,'` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;') AS    mySQL
 FROM INFORMATION_SCHEMA.TABLES
 WHERE TABLE_SCHEMA= "redmine_production"
 AND TABLE_TYPE="BASE TABLE"
 ~~~
+note: if you has ben installd plugins before,you should install plugins first then import database
 
 when you import data don't use
 ```
@@ -82,6 +81,8 @@ the old database of the redmine don't have fields of default_version_id and defa
 mysqldump redmind_product peojects > projects.sql
 insert into table(fields1,fields2)value(xxx,xxx)
 source /xxx/projects.sql
+---
+id,name,description,homepage,is_public,parent_id,created_on,updated_on,identifier,status,lft,rgt,inherit_members
 ```
 another one you should truncate
 ```
@@ -101,5 +102,5 @@ gem install rmagick mysql2 pg
 download plugins
 put it into direcoty of plugins and run instruction
 ~~~
-rake redmine:plugins:migrate  RAILS_ENV=production
+bundle exec rake db:migrate_plugins RAILS_ENV=production
 ~~~

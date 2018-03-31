@@ -70,7 +70,7 @@ docker run --name="node-exporter" -d --net="host" --pid="host" --restart unless-
 ## install mysqld-exporter for prometheus
 install mysqld-exporter on mysql Server
 ### modify mysqld ocnfig files
-#### if mysql listen address is 127.0.0.1 you should add below
+if mysql listen address is 127.0.0.1 you should add below
 ~~~
 bind-address=0.0.0.0
 ~~~
@@ -80,7 +80,7 @@ CREATE USER 'prom'@'172.17.0.%' IDENTIFIED BY 'abcd12345';
 GRANT PROCESS, REPLICATION CLIENT ON *.* TO 'prom'@'172.17.0.%';
 GRANT SELECT ON performance_schema.* TO 'prom'@'172.17.0.%';
 ~~~
-#### or it will have problem like this
+or it will have problem like this
 ~~~
  time="2018-03-31T01:03:34Z" level=error msg="Error pinging mysqld: dial tcp 192.168.1.19:3306: getsockopt: connection refused" source="mysqld_exporter.go:268"
 ~~~

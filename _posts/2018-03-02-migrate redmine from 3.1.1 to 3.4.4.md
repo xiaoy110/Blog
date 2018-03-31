@@ -17,6 +17,8 @@ setps
 5. import old databases
 6. import new databases
 7. truncate tables of users roles email_address  
+
+
 ## check engine
 ~~~
 SELECT @@default_storage_engine;

@@ -10,20 +10,20 @@ first of all check the databases version,engine and character, make sure that ar
 
 setps
 -----------------
-1 install redmine  
-2 modify database's character to utf8
-3 if you have plugins install plugins first
-4 copy files to new redmine files directory
-5 import old databases
-6 import new databases
-7 truncate tables of users roles email_address  
-check engine
+1. install redmine  
+2. modify database's character to utf8
+3. if you have plugins install plugins first
+4. copy files to new redmine files directory
+5. import old databases
+6. import new databases
+7. truncate tables of users roles email_address  
+## check engine
 ~~~
 SELECT @@default_storage_engine;
 SELECT ENGINE FROM information_schema.TABLES WHERE TABLE_SCHEMA = 'redmine';
 show variables like 'char%';
 ~~~
-check character
+## check character
 ~~~
 status
 Server characterset:	utf8
@@ -31,11 +31,11 @@ Db     characterset:	utf8
 Client characterset:	utf8
 Conn.  characterset:	utf8
 ~~~
-it looks like are utf8 character but actually it not
+## it looks like are utf8 character but actually it not
 ~~~
 show create table attachments
 ~~~
-you will find that table's character still is latin1
+## you will find that table's character still is latin1
 ~~~
 SELECT *
 FROM INFORMATION_SCHEMA.TABLES
@@ -43,7 +43,7 @@ WHERE TABLE_SCHEMA="YourDataBaseName"
 AND TABLE_TYPE="BASE TABLE";
 ~~~
 
-my.cnf
+## my.cnf
 ```
 [mysqld]
 collation-server = utf8_unicode_ci
@@ -58,13 +58,13 @@ collation-server=utf8_unicode_ci
 skip-character-set-client-handshake
 ```
 
-export database redmine_production
+## export database redmine_production
 ~~~
 mysqldump　-t　redmine_production　-uroot　-p　>　redmine_production.sql　
 ~~~
 
 before you import to new databases if not utf8
-convert it to utf8
+## convert it to utf8
 ~~~
 SELECT CONCAT('ALTER TABLE `', TABLE_NAME,'` CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;') AS    mySQL
 FROM INFORMATION_SCHEMA.TABLES
@@ -73,11 +73,11 @@ AND TABLE_TYPE="BASE TABLE"
 ~~~
 note: if you has ben installd plugins before,you should install plugins first then import database
 
-when you import data don't use
+##  when you import data don't use
 ```
  mysql somedatabase < redmine_production.sql
 ```
-just do this
+## just do this
 ~~~
 mysql
 use redmine_production
@@ -92,7 +92,7 @@ insert into table(fields1,fields2)value(xxx,xxx)
 source /xxx/projects.sql
 id,name,description,homepage,is_public,parent_id,created_on,updated_on,identifier,status,lft,rgt,inherit_members
 ```
-another one you should truncate
+## another one you should truncate
 ```
 mysqldump redmind_product users > users.sql
 turncate users

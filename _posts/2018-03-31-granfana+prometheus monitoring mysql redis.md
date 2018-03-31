@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  granfana+prometheus monitoring mysql redis
+title:  grafana+prometheus monitoring mysql redis
 date:   2018-03-31 18:38:58
 categories: Linux
 tags: Linux
 ---
 
 
-# granfana+prometheus
+# grafana+prometheus
 
 all of those things are docker,if you do not install docker install docker first
 
@@ -17,7 +17,14 @@ mkdir /data/prometheus
 chmod +x 65534.65534 /data/prometheus
 ~~~
 
-### the content of prometheus.conf
+### the content of the prometheus.conf
+
+```
+1 I install prometheus server
+2 install node to monitor Server
+3 install grafana
+
+```
 ~~~
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
@@ -52,7 +59,11 @@ scrape_configs:
 ~~~
 docker run --name="prometheus" -d -v /data/prometheus:/prometheus -v /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml -p 9090:9090 --restart unless-stopped prom/prometheus
 ~~~
-
+### visit webpage
+~~~
+you can visit ip:9090
+click staus --> targets
+~~~
 ## install node-exporter for prometheus
 ~~~
 docker run --name="node-exporter" -d --net="host" --pid="host" --restart unless-stopped quay.io/prometheus/node-exporter
@@ -84,10 +95,21 @@ docker run -d -p 9104:9104 -e DATA_SOURCE_NAME="prom:abcd@(172.27.0.9:3306)/perf
 docker run -d --name redis_exporter -p 9121:9121 -e REDIS_ADDR=172.27.0.9:6379 --restart unless-stopped oliver006/redis_exporter
 ~~~
 
-## install granfana
+## install grafana
 ~~~
 docker run -p 3000:3000 -d --restart unless-stopped  grafana/grafana:5.0.0
 ~~~
 ### next of the this is config grafana connect to prometheus
+1. login your ip:3000
+2. default username and password are admin
+3. configuration
+4. add data source
+5. NAME Prometheus (Prometheus first letter capitalization), TYPE choose prometheus
+6. HTTP  URL http://ip:9090 ADDRESS proxy
+7. save & test
+
+## recommend github
+https://github.com/percona
+
 Inline-style:
 ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")

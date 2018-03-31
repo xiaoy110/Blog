@@ -8,6 +8,15 @@ tags: Linux
 
 first of all check the databases version,engine and character, make sure that are in same version engine and character.
 
+setps
+-----------------
+1 install redmine  
+2 modify database's character to utf8
+3 if you have plugins install plugins first
+4 copy files to new redmine files directory
+5 import old databases
+6 import new databases
+7 truncate tables of users roles email_address  
 check engine
 ~~~
 SELECT @@default_storage_engine;
@@ -81,7 +90,6 @@ the old database of the redmine don't have fields of default_version_id and defa
 mysqldump redmind_product peojects > projects.sql
 insert into table(fields1,fields2)value(xxx,xxx)
 source /xxx/projects.sql
----
 id,name,description,homepage,is_public,parent_id,created_on,updated_on,identifier,status,lft,rgt,inherit_members
 ```
 another one you should truncate
@@ -89,12 +97,13 @@ another one you should truncate
 mysqldump redmind_product users > users.sql
 turncate users
 source /xxx/users.sql
+roles and mail_address
 ```
+
 it's done for migrate databases
 the rest of all is copy direcoty of files to new directory of files, you also have to install some plugins
 I had installd plugins redmine_code_review and redmine_git_remote
 ~~~
-apt remove imagemagick
 apt update
 apt install libmagickwand-dev libmysqlclient-dev libpq-dev
 gem install rmagick mysql2 pg

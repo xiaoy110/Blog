@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  prometheus+consul auto discover
-date:   2018-03-31 18:38:58
+date:   2018-04-02 18:38:58
 categories: Linux
 tags: Linux
 ---
@@ -17,6 +17,33 @@ global:
 scrape_configs:
   - job_name: consul_sd
     relabel_configs:
+    - source_labels:  ["__meta_consul_dc"]
+      regex: "(.*)"
+      replacement: $1
+      action: replace
+      target_label: "dc"
+    metrics_path: /metrics
+    scheme: http
+    consul_sd_configs:
+      - server: consul:8500
+        scheme: http
+        services:
+~~~
+
+if you want to filter data
+## prometheus.yml2
+~~~
+global:
+  scrape_interval: 5s
+  scrape_timeout: 5s
+  evaluation_interval: 15s
+scrape_configs:
+  - job_name: consul_sd
+    relabel_configs:
+    - source_labels: ["__meta_consul_tags"]
+      regex: ".*,development,.*"
+      #regex: ".*,dev,.*"
+      action: keep
     - source_labels:  ["__meta_consul_dc"]
       regex: "(.*)"
       replacement: $1
@@ -77,6 +104,12 @@ services:
     labels:
       SERVICE_TAGS: "production,scraped"
 ~~~
+Note it weil be error if without cap_add
+
+visit ip:9090
+- if you're ues prometheus.yaml it would be show all servers
+- if you're use protheus.yaml2 it will be show one
+
 
 ## how to register servers
 ~~~

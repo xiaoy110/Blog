@@ -104,7 +104,7 @@ services:
     labels:
       SERVICE_TAGS: "production,scraped"
 ~~~
-Note it weil be error if without cap_add
+Note it will be error if without cap_add
 
 visit ip:9090
 - if you're ues prometheus.yaml it would be show all servers

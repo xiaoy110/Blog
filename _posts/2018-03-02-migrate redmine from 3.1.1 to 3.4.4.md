@@ -17,8 +17,7 @@ setps
 5. import old databases
 6. import new databases
 7. truncate tables of users roles email_address  
-
-
+8. /var/log/redmine home/redmine/data .home/redmine/redmine/files mysqldb thoes directory you better mounts disks when you useing docker of redmine and mysqld
 ## check engine
 ~~~
 SELECT @@default_storage_engine;

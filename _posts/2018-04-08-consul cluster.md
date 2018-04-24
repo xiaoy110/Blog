@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  prometheus+consul auto discover
+title:  consul cluster
 date:   2018-04-08 8:38:58
 categories: Linux
 tags: Linux
@@ -11,8 +11,8 @@ tags: Linux
 mkdir /home/k/consulcluster
 ```
 then makes following files
-## consul configure
-```
+## consul configureations
+```bash
 
 echo 'consul agent -config-file=/wk/consul/client1.json' > runClient1.sh
 
@@ -83,4 +83,10 @@ docker run --name=server1 -itd -v /home/k/consulcluster:/wk consul sh /wk/consul
 docker run --name=server2 -itd -v /home/k/consulcluster:/wk consul sh /wk/consul/runServer2.sh
 docker run --name=server3 -itd -v /home/k/consulcluster:/wk consul sh /wk/consul/runServer3.sh
 docker run --name=client1 -itd -p 8500:8500 -v /share:/wk consul sh /wk/consul/runClient1.sh
+```
+there are some of recommands links
+```
+https://hub.docker.com/_/consul/
+https://www.consul.io/docs/internals/architecture.html
+
 ```

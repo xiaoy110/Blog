@@ -14,10 +14,12 @@ setps
 2. modify database's character to utf8
 3. if you have plugins install plugins first
 4. copy files to new redmine files directory
-5. import old databases
+5. export old databases
 6. import new databases
 7. truncate tables of users roles email_address  
 8. /var/log/redmine home/redmine/data .home/redmine/redmine/files mysqldb thoes directory you better mounts disks when you useing docker of redmine and mysqld
+
+
 ## check engine
 ~~~
 SELECT @@default_storage_engine;

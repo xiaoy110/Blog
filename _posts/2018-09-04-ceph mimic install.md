@@ -23,6 +23,8 @@ ceph-deploy version: 2.0.0
 |ceph03|10.10.111.23|10.10.115.102|sdb-h and sda4-10|
 |ceph04|10.10.111.24|10.10.115.103|sdb-h and sda4-10|
 |ceph05|10.10.111.25|10.10.115.104|sdb-h and sda4-10|
+
+
 The partition format of each disk is GPT (operaing system are included)
 
 ## Generate ssh-key

@@ -313,3 +313,26 @@ ceph -s
   io:
     client:   1.7 KiB/s rd, 0 B/s wr, 1 op/s rd, 1 op/s wr
 ~~~
+## Enable dashboard
+~~~
+ceph mgr module enable dashboard
+
+要快速启动并运行仪表板，可以使用以下内置命令生成并安装自签名证书:
+
+# ceph dashboard create-self-signed-cert
+Self-signed certificate created
+
+
+创建具有管理员角色的用户:
+
+# ceph dashboard set-login-credentials admin admin
+Username and password updated
+
+
+查看ceph-mgr服务:
+
+# ceph mgr services
+{
+    "dashboard": "https://ceph01:8080/",
+ }
+~~~

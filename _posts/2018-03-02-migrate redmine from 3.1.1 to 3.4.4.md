@@ -115,4 +115,6 @@ download plugins
 put it into direcoty of plugins and run instruction
 ~~~
 bundle exec rake db:migrate_plugins RAILS_ENV=production
+or
+bundle exec rake redmine:plugins:migrate RAILS_ENV=production
 ~~~
